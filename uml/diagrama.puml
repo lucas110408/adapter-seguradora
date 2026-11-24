@@ -1,0 +1,40 @@
+@startuml
+skinparam monochrome true
+skinparam style strictuml
+skinparam classBackgroundColor White
+skinparam backgroundColor White
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+
+class Segurado {
+  + setClassificacao(letra : String)
+  + getClassificacao() : String
+  + getPontuacao() : float
+}
+
+interface IClassificacao <<interface>> {
+  + getClassificacao() : String
+  + setClassificacao(classificacao : String)
+}
+
+class ClassificacaoLetra {
+  - letra : String
+}
+
+class ClassificacaoPontuacao {
+  - pontuacao : float
+  + getPontuacao() : float
+  + setPontuacao(pontuacao : float)
+}
+
+class ClassificacaoAdapter {
+  + recuperarClassificacao() : String
+  + salvarClassificacao()
+}
+
+IClassificacao <|.. ClassificacaoLetra
+ClassificacaoPontuacao <|-- ClassificacaoAdapter
+ClassificacaoAdapter --> "1" IClassificacao : classificacaoLetra
+Segurado --> "1" IClassificacao
+Segurado --> "1" ClassificacaoAdapter : persistencia
+@enduml
